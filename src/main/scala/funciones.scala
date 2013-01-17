@@ -3,14 +3,12 @@
 // Algunos ejemplos simples de funciones de alto orden.
 object Funciones extends App {
 
-
-
   val lista       = List(1,2,3,4,5)
   val duplicada   = lista.map( i => i*2 )
 
   println( s"$lista, duplicada $duplicada")
 
-  //functions are values
+  // Las funciones son valores.
   val triplica      = (i:Int) => i*3
   val triplicada    = lista.map(triplica)
 
@@ -20,12 +18,28 @@ object Funciones extends App {
   val cuadruplica = (i:Int) => i*4
 
   // Composición funcional!
-  val compuesta = duplica andThen triplica andThen cuadruplica
-  val mucho = lista map compuesta
+  val muchifica = duplica andThen triplica andThen cuadruplica
+  val mucho     = lista map muchifica
 
   println( s"$lista, muchificada $mucho " )
 
 }
+
+// Todos los números entre cero y hasta que suma suma.
+object ForComprehensions extends App {
+
+  def paresQueSuman(hasta: Int, suma: Int) =
+    for (i <- 0 until hasta;
+         j <- i + 1 until hasta if i + j == suma) yield (i, j)
+
+  // Sneak peak al pattern matching!
+  paresQueSuman(20, 32) foreach {
+    case (i, j) =>
+      println("(" + i + ", " + j + ")")
+  }
+
+}
+
 
 object CurryAndPartialApplications {
 
@@ -50,11 +64,13 @@ object LiftingMethods extends App {
 
   def mult(a: Int, b:Int) = a*b
 
-  def multFun = mult _
+  // Acá el subguión dice que no le importan los parámetros
+  //  y que quiere la función no el resultado.
+  def multFun = (mult _).curried
 
-  val duplica     = multFun(_:Int, 2)
-  val triplica    = multFun(_:Int, 3)
-  val cuadruplica = mult(_:Int, 4)
+  val duplica     = multFun(2)
+  val triplica    = multFun(3)
+  val cuadruplica = multFun(4)
 
   val compuesta = duplica andThen triplica andThen cuadruplica
   val mucho     = lista map compuesta

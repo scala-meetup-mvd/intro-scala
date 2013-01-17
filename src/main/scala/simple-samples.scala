@@ -15,35 +15,42 @@ object AppWithParams extends App {
                 args(0)
               else "Anonymous"
 
-  // Could have also been this, as trys are also expressions.
-  // val name = try {
+  // Podríamos haber hecho esto: el try es una expresión también.
+  // val nombre = try {
   //              args(0)
   //            } catch {
   //              case e: ArrayIndexOutOfBoundsException => "Anonymous"
   //            }
 
-
   println( s"Hola, $name" )
 
 }
 
-object MiscLittleFeatures {
+object MiscLittleFeatures extends App {
 
   val value = 1
   // value = 2 // NO COMPILA
-  println( "Value = $value" )
+  println( s"Value = $value" )
 
   var variable = "1"
   variable = "2"
-  println( "Variable = $variable" )
+  println( s"Variable = $variable" )
 
   val hereDocs =
-    """
+    s"""
       |
       | Esto es un string enorme. Soporta interpolation: $value
-      | stripMargin elimina de los pipes hacia la izquierda. Permite indentar.
+      |stripMargin elimina de los pipes hacia la izquierda. Permite indentar.
       |
     """.stripMargin
+
+    println( "Long Text with margin:" + hereDocs)
+
+  def parametersShowOff( nombre: String, edad: Int, color: String = "negro" ) = {
+    println( s"$nombre tiene $edad años y gusta del color $color" )
+  }
+
+  parametersShowOff( edad = 40, nombre = "Federico" )
 
 }
 
