@@ -1,0 +1,12 @@
+target/
+.history
+
+
+.classpath
+.project
+.settings/
+
+.swo
+*.scalala
+*.hprof
+.idea*
